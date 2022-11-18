@@ -5,14 +5,15 @@ import (
 	"os"
 	"strings"
 
-	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/pakawatkung/go-web-fiber/handler"
 	"github.com/pakawatkung/go-web-fiber/repository"
 	"github.com/pakawatkung/go-web-fiber/service"
 	"github.com/spf13/viper"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func init() {
@@ -60,6 +61,9 @@ func main() {
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			return fiber.ErrUnauthorized
 		},
+	}))
+	app.Use(logger.New(logger.Config{
+		TimeZone: "Asia/Bangkok",
 	}))
 	app.Get("/user", userApi.GetAllData)
 	app.Post("/signup/:username/:password", userApi.UserSignUp)
