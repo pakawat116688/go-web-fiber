@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appfiber-deployment
+  namespace: app-fiber-dev
+  labels:
+    app: appfiber-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appfiber-deployment
+  template:
+    metadata:
+      labels:
+        app: appfiber-deployment
+    spec:
+      hostAliases:
+        - ip: 127.0.0.1
+          hostnames:
+            - localhost
+      containers:
+      - name: appfiber-deployment
+        image: gofiber:go1
+        imagePullPolicy: Never
+        volumeMounts:
+        - name: appfiber-volume
+          mountPath: /vipers.yaml
+          subPath: vipers.yaml
+      volumes:
+      - name: appfiber-volume
+        configMap:
+          name: appfiber-configmap
