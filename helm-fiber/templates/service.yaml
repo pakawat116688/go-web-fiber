@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helm-fiber.fullname" . }}
+  labels:
+    {{- include "helm-fiber.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.default.port }}
+      targetPort: {{ .Values.service.default.target }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "helm-fiber.selectorLabels" . | nindent 4 }}

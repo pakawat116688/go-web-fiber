@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-application
+data:
+  application.yaml: |
+  {{- toYaml .Values.configmap.application | nindent 4 }}

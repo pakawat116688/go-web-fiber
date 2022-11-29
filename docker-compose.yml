@@ -4,6 +4,6 @@ services:
   app:
     image: gofiber:go1
     ports:
-      - 8080:8000
+      - 8000:8000
     volumes:
       - /Users/priorsolutionn/Desktop/go-web-fiber/vipers.yaml:/vipers.yaml
